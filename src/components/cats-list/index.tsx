@@ -11,7 +11,7 @@ export default function CatList() {
   );
 
   const fetchCats = useCallback((): void => {
-    dispatch(onFetchRequest());
+    dispatch(onFetchRequest({ limit: 10 }));
   }, [dispatch]);
 
   useEffect(() => {

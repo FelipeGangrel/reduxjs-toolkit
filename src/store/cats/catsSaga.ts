@@ -1,13 +1,19 @@
 import axios from "axios";
-import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
-import { onFetchFailure, onFetchRequest, onFetchSuccess } from "./catsReducer";
+import { call, put, takeLatest } from "redux-saga/effects";
+import {
+  FetchAction,
+  onFetchFailure,
+  onFetchRequest,
+  onFetchSuccess,
+} from "./catsReducer";
 
-function* fetchCats() {
+function* fetchCats(action: FetchAction) {
   const url = "https://api.thecatapi.com/v1/breeds";
+  const { limit } = action.payload;
 
   try {
     const { data } = yield call(axios.get, url);
-    const catsSubset = data.slice(0, 10); // the first 10 cats
+    const catsSubset = limit ? data.slice(0, limit) : data;
 
     yield put(onFetchSuccess({ cats: catsSubset }));
   } catch (error) {
@@ -16,5 +22,5 @@ function* fetchCats() {
 }
 
 export default function* catsSaga() {
-  yield takeLatest("cats/onFetchRequest", fetchCats);
+  yield takeLatest(onFetchRequest.type, fetchCats);
 }

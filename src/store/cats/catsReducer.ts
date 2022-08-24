@@ -7,13 +7,9 @@ interface CatsState {
   error: string | null;
 }
 
-interface SuccessAction {
-  cats: CatBreed[];
-}
-
-interface FailureAction {
-  error: string;
-}
+export interface FetchAction extends PayloadAction<{ limit?: number }> {}
+interface SuccessAction extends PayloadAction<{ cats: CatBreed[] }> {}
+interface FailureAction extends PayloadAction<{ error: string }> {}
 
 const initialState: CatsState = {
   loading: false,
@@ -25,15 +21,15 @@ export const catsSlice = createSlice({
   name: "cats",
   initialState,
   reducers: {
-    onFetchRequest: (state) => {
+    onFetchRequest: (state, _action: FetchAction) => {
       state.loading = true;
       state.error = null;
     },
-    onFetchSuccess: (state, action: PayloadAction<SuccessAction>) => {
+    onFetchSuccess: (state, action: SuccessAction) => {
       state.loading = false;
       state.cats = action.payload.cats;
     },
-    onFetchFailure: (state, action: PayloadAction<FailureAction>) => {
+    onFetchFailure: (state, action: FailureAction) => {
       state.loading = false;
       state.error = action.payload.error;
     },
