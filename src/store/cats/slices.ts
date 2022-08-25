@@ -1,18 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { CatBreed } from "contracts/cats";
-import { fetchCats, createCat } from "./thunks";
-
-interface FetchCatsState {
-  loading: boolean;
-  cats: CatBreed[];
-  error?: string;
-}
-
-interface CreateCatState {
-  loading: boolean;
-  error?: string;
-  validationErrors?: string[];
-}
+import { CreateCatState, FetchCatsState } from "contracts/cats";
+import { createCat, fetchCats } from "./thunks";
 
 export const fetchCatsSlice = createSlice<FetchCatsState, {}, "cats">({
   name: "cats",
@@ -31,7 +19,7 @@ export const fetchCatsSlice = createSlice<FetchCatsState, {}, "cats">({
     });
     builder.addCase(fetchCats.rejected, (state, action) => {
       state.loading = false;
-      state.error = action.payload;
+      state.error = action.payload?.error;
     });
   },
 });
