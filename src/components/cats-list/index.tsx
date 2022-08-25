@@ -3,19 +3,23 @@ import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "store";
 import { fetchCats } from "store/cats/catsSlice";
 
-export default function CatList() {
+interface Props {
+  limit?: number;
+}
+
+export default function CatList({ limit }: Props) {
+  const dogImage = "https://picsum.photos/id/237/200/300";
   const dispatch = useAppDispatch();
   const { cats, error, loading } = useSelector(
     (state: RootState) => state.cats
   );
 
   useEffect(() => {
-    // const promise = dispatch(fetchCats({ limit: 10 }));
-    const promise = dispatch(fetchCats());
+    const promise = dispatch(fetchCats({ limit }));
     return () => {
       promise.abort();
     };
-  }, [dispatch]);
+  }, [dispatch, limit]);
 
   return (
     <div className="Gallery">
@@ -25,14 +29,12 @@ export default function CatList() {
       {cats.map((cat, index) => (
         <div key={index} className="row">
           <div className="column column-left">
-            {cat.image && (
-              <img
-                src={cat.image.url}
-                width="200"
-                height="200"
-                alt={cat.name}
-              />
-            )}
+            <img
+              src={cat?.image?.url ?? dogImage}
+              width="200"
+              height="200"
+              alt={cat.name}
+            />
           </div>
           <div className="column column-right">
             <h2>{cat.name}</h2>
