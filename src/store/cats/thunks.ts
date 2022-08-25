@@ -7,6 +7,7 @@ import {
   FetchCatsParams,
   FetchCatsRejectValue,
 } from "contracts/cats";
+import { counterSlice } from "store/counter/slices";
 
 export const fetchCats = createAsyncThunk<
   CatBreed[],
@@ -14,6 +15,13 @@ export const fetchCats = createAsyncThunk<
   FetchCatsRejectValue
 >(`cats/fetchCats`, async (params, thunkApi) => {
   try {
+    // I know, makes no sense, but it's just an example
+    // We can call actions from other slices, like counterSlice
+    const { increment } = counterSlice.actions;
+    thunkApi.dispatch(increment());
+
+    await new Promise((resolve) => setTimeout(resolve, 5_000));
+
     const url = "https://api.thecatapi.com/v1/breeds";
     const { data } = await axios.get<CatBreed[]>(url);
     if (typeof params?.limit === "number") {
