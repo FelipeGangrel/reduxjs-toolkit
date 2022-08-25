@@ -1,10 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { useDispatch } from "react-redux";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import createSagaMiddleware from "redux-saga";
 
 import rootReducer from "./rootReducer";
-import rootSaga from "./rootSaga";
 
 const persistedReducer = persistReducer(
   {
@@ -15,17 +14,17 @@ const persistedReducer = persistReducer(
   rootReducer
 );
 
-const saga = createSagaMiddleware();
-
 const store = configureStore({
   reducer: persistedReducer,
-  middleware: [saga],
+  middleware(getDefaultMiddleware) {
+    return getDefaultMiddleware({
+      serializableCheck: false,
+    });
+  },
   devTools: process.env.NODE_ENV !== "production",
 });
 
-saga.run(rootSaga);
-
 export const persistor = persistStore(store);
+export const useAppDispatch = () => useDispatch<typeof store.dispatch>();
 export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
 export default store;
