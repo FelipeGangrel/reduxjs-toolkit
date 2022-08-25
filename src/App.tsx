@@ -9,7 +9,7 @@ function App() {
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <div className="App">
-          <CatsList />
+          <CatsList limit={10} />
         </div>
       </PersistGate>
     </Provider>
