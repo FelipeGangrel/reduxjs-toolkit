@@ -1,7 +1,8 @@
 import { combineReducers } from "@reduxjs/toolkit";
 
-import catsReducer from "./cats/catsSlice";
+import { fetchCatsSlice, createCatSlice } from "./cats/slices";
 
 export default combineReducers({
-  cats: catsReducer,
+  fetchCats: fetchCatsSlice.reducer,
+  createCat: createCatSlice.reducer,
 });

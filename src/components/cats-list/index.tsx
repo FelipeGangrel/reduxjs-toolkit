@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "store";
-import { fetchCats } from "store/cats/catsSlice";
+import { fetchCats } from "store/cats/thunks";
 
 interface Props {
   limit?: number;
@@ -11,7 +11,7 @@ export default function CatList({ limit }: Props) {
   const dogImage = "https://picsum.photos/id/237/200/300";
   const dispatch = useAppDispatch();
   const { cats, error, loading } = useSelector(
-    (state: RootState) => state.cats
+    (state: RootState) => state.fetchCats
   );
 
   useEffect(() => {
