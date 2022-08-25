@@ -1,7 +1,8 @@
+import { useFetchCats } from "hooks/useFetchCats";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store";
-import { onFetchRequest } from "store/cats/catsReducer";
+import { onFetchRequest } from "store/cats/fetchCatsReducer";
 
 interface Props {
   limit?: number;
@@ -10,13 +11,20 @@ interface Props {
 export default function CatList({ limit }: Props) {
   const dogImage = "https://picsum.photos/id/237/200/300";
   const dispatch = useDispatch();
+
+  // const { cats, loading, error, fetchCats } = useFetchCats();
+
   const { cats, error, loading } = useSelector(
-    (state: RootState) => state.cats
+    (state: RootState) => state.fetchCats
   );
 
   useEffect(() => {
     dispatch(onFetchRequest({ limit }));
   }, [dispatch, limit]);
+
+  // useEffect(() => {
+  //   fetchCats(limit);
+  // }, [fetchCats, limit]);
 
   return (
     <div className="Gallery">

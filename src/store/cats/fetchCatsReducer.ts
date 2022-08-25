@@ -17,7 +17,7 @@ const initialState: CatsState = {
   error: null,
 };
 
-export const catsSlice = createSlice({
+export const fetchCatsSlice = createSlice({
   name: "cats",
   initialState,
   reducers: {
@@ -37,6 +37,6 @@ export const catsSlice = createSlice({
 });
 
 export const { onFetchRequest, onFetchSuccess, onFetchFailure } =
-  catsSlice.actions;
+  fetchCatsSlice.actions;
 
-export default catsSlice.reducer;
+export default fetchCatsSlice.reducer;

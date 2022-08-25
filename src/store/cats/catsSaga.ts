@@ -5,13 +5,12 @@ import {
   onFetchFailure,
   onFetchRequest,
   onFetchSuccess,
-} from "./catsReducer";
+} from "./fetchCatsReducer";
 
 function* fetchCats(action: FetchAction) {
-  const url = "https://api.thecatapi.com/v1/breeds";
-  const { limit } = action.payload;
-
   try {
+    const url = "https://api.thecatapi.com/v1/breeds";
+    const { limit } = action.payload;
     const { data } = yield call(axios.get, url);
     const catsSubset = limit ? data.slice(0, limit) : data;
 
