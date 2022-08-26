@@ -12,6 +12,7 @@ export const fetchCatsSlice = createSlice<FetchCatsState, {}, "cats">({
   extraReducers: (builder) => {
     builder.addCase(fetchCats.pending, (state) => {
       state.loading = true;
+      state.error = undefined;
     });
     builder.addCase(fetchCats.fulfilled, (state, action) => {
       state.loading = false;
@@ -33,6 +34,8 @@ export const createCatSlice = createSlice<CreateCatState, {}, "cats">({
   extraReducers: (builder) => {
     builder.addCase(createCat.pending, (state) => {
       state.loading = true;
+      state.error = undefined;
+      state.validationErrors = undefined;
     });
     builder.addCase(createCat.fulfilled, (state) => {
       state.loading = false;

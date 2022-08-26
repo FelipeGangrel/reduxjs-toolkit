@@ -1,4 +1,5 @@
 import CatsList from "components/cats-list";
+import Counter from "components/counter";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import store, { persistor } from "store";
@@ -9,6 +10,7 @@ function App() {
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <div className="App">
+          <Counter />
           <CatsList limit={10} />
         </div>
       </PersistGate>

@@ -11,25 +11,26 @@ export default function CatList({ limit }: Props) {
   const dogImage = "https://picsum.photos/id/237/200/300";
 
   const dispatch = useAppDispatch();
-  const promise = useRef<{ abort: () => void }>();
+  // const promise = useRef<{ abort: () => void }>();
 
   const { cats, error, loading } = useSelector(
     (state: RootState) => state.fetchCats
   );
 
   const handleFetchManually = useCallback(() => {
-    promise.current = dispatch(fetchCats({ limit }));
+    dispatch(fetchCats({ limit }));
+    // promise.current = dispatch(fetchCats({ limit }));
     // hehehe... we put a timeout of 5 seconds before fetching the cats
-    setTimeout(() => {
-      promise.current?.abort();
-    }, 3_000);
+    // setTimeout(() => {
+    //   promise.current?.abort();
+    // }, 3_000);
   }, [dispatch, limit]);
 
-  useEffect(() => {
-    return () => {
-      promise.current?.abort();
-    };
-  }, []);
+  // useEffect(() => {
+  //   return () => {
+  //     promise.current?.abort();
+  //   };
+  // }, []);
 
   return (
     <div className="Gallery">
